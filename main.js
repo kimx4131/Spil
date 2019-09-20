@@ -7,6 +7,17 @@ let y;
 let player = -1;
 let playerPostion;
 
+let score = 0;
+let point = 1;
+let scoreText = document.querySelector('#score');
+scoreText.innerHTML = score;
+
+function pointScore() {
+    score += point;
+    scoreText.innerHTML = score;
+}
+
+
 function grid(){
     for(y=0; y < maze.length; y++){
         for(x=0; x < maze[y].length; x++){
@@ -21,12 +32,15 @@ function grid(){
                 canvasContext.fillStyle = mazeColor;
                 canvasContext.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
 
-                canvasContext.strokeStyle=mineColor;
-                canvasContext.lineWidth=5;
+                // canvasContext.strokeStyle=mineColor;
+                // canvasContext.lineWidth=5;
 
-                canvasContext.beginPath();
-                canvasContext.arc(x*tileSize+(tileSize/2), y*tileSize+(tileSize/2), tileSize/3, 0, 2*Math.PI);
-                canvasContext.stroke();
+                // canvasContext.beginPath();
+                // canvasContext.arc(x*tileSize+(tileSize/2), y*tileSize+(tileSize/2), tileSize/3, 0, 2*Math.PI);
+                // canvasContext.stroke();
+
+                canvasContext.drawImage(mineImg,x*tileSize+(tileSize/10),y*tileSize+(tileSize/10) , tileSize/1.3, tileSize/1.3);
+                
                 
             } else if(maze[y][x] == 0){ //BANE/VEJ
                 canvasContext.fillStyle = mazeColor;
@@ -34,6 +48,8 @@ function grid(){
             }  else if(maze[y][x] == player){ //PLAYER/SPILLER
                 playerPostion = {y,x}; //genne og kigger på hvorhenne playeren er på pladen
                 console.log(playerPostion.y + " " + playerPostion.x);
+
+                
 
                 canvasContext.fillStyle = mazeColor;
                 canvasContext.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
@@ -44,10 +60,16 @@ function grid(){
                 canvasContext.beginPath();
                 canvasContext.arc(x*tileSize+(tileSize/2), y*tileSize+(tileSize/2), tileSize/3, 0, 2*Math.PI);
                 canvasContext.stroke();
+            } else if(maze[y][x] == 5){ //Points
+                canvasContext.fillStyle = mazeColor;
+                canvasContext.fillRect(x*tileSize, y*tileSize, tileSize, tileSize);
+
+                canvasContext.drawImage(pointImg,x*tileSize+(tileSize/10),y*tileSize+(tileSize/10) , tileSize/1.3, tileSize/1.3);
             } 
         }
     }
 }
+grid();
 
 //Funktioner til Switch angående piltaster
 function keyLeft(){
@@ -61,7 +83,11 @@ function keyLeft(){
     } else if (maze[playerPostion.y][playerPostion.x -1] == 2){
         soundClapping();
         toNewMaze();
-    }  else{
+    }  else if (maze[playerPostion.y][playerPostion.x-1] == 5){
+        pointScore();
+        maze[playerPostion.y][playerPostion.x -1] = -1; 
+        maze[playerPostion.y][playerPostion.x] = 0; 
+    } else{
         soundWall();
     }
 };
@@ -75,8 +101,17 @@ function keyUp(){
         soundMine();
         diedMine();
     } else if (maze[playerPostion.y -1][playerPostion.x] == 2){
-        soundClapping();
-        toNewMaze();
+        if(score == 5){
+            soundClapping();
+            toNewMaze();
+        } else {
+            alert("Du har ikke nok points");
+        }
+        
+    } else if (maze[playerPostion.y -1][playerPostion.x] == 5){
+        pointScore();
+        maze[playerPostion.y -1][playerPostion.x] = -1; 
+        maze[playerPostion.y][playerPostion.x] = 0; 
     } else {
         soundWall();
     }
@@ -93,6 +128,10 @@ function keyRight(){
     } else if (maze[playerPostion.y][playerPostion.x +1] == 2){
         soundClapping();
         toNewMaze();
+    } else if (maze[playerPostion.y][playerPostion.x +1] == 5){
+        pointScore();
+        maze[playerPostion.y][playerPostion.x +1] = -1; 
+        maze[playerPostion.y][playerPostion.x] = 0;
     } else {
         soundWall();
     }
@@ -109,6 +148,10 @@ function keyDown(){
     } else if (maze[playerPostion.y +1][playerPostion.x] == 2){
         soundClapping();
         toNewMaze();
+    } else if (maze[playerPostion.y +1][playerPostion.x] == 5){
+        pointScore();
+        maze[playerPostion.y +1][playerPostion.x] = -1; 
+        maze[playerPostion.y][playerPostion.x] = 0; 
     } else {
         soundWall();
     }
@@ -147,6 +190,14 @@ window.addEventListener("keydown", function(event){
 
 });
 
-grid();
+
+
+
+
+
+
+
+
+
 
 

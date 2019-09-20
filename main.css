@@ -11,6 +11,13 @@
     background-repeat: no-repeat;
 }
 
+.score1{
+    color: white;
+    background-color:#605519;
+    width: 500px;
+    padding: 10px;
+}
+
 
 
 .maze2{
@@ -28,6 +35,14 @@
 
 }
 
+.score2{
+    color: white;
+    background-color:#704A6E;
+    width: 500px;
+    padding: 10px;
+}
+
+
 .maze3{
     border: 3px solid white;
     margin: 0 auto 0 auto;
@@ -40,5 +55,11 @@
     background-image: url('img/sand.jpg');
     background-position: center;
     
+}
 
+.score3{
+    color: black;
+    background-color:white;
+    width: 1000px;
+    padding: 10px;
 }
