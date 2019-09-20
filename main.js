@@ -81,8 +81,12 @@ function keyLeft(){
         soundMine();
         diedMine();
     } else if (maze[playerPostion.y][playerPostion.x -1] == 2){
-        soundClapping();
-        toNewMaze();
+        if(score == 5){
+            soundClapping();
+            toNewMaze();
+        } else {
+            alert("Du har ikke nok points");
+        }
     }  else if (maze[playerPostion.y][playerPostion.x-1] == 5){
         pointScore();
         maze[playerPostion.y][playerPostion.x -1] = -1; 
@@ -126,8 +130,12 @@ function keyRight(){
         soundMine();
         diedMine();
     } else if (maze[playerPostion.y][playerPostion.x +1] == 2){
-        soundClapping();
-        toNewMaze();
+        if(score == 5){
+            soundClapping();
+            toNewMaze();
+        } else {
+            alert("Du har ikke nok points");
+        }
     } else if (maze[playerPostion.y][playerPostion.x +1] == 5){
         pointScore();
         maze[playerPostion.y][playerPostion.x +1] = -1; 
@@ -146,8 +154,12 @@ function keyDown(){
         soundMine();
         diedMine();
     } else if (maze[playerPostion.y +1][playerPostion.x] == 2){
-        soundClapping();
-        toNewMaze();
+        if(score == 5){
+            soundClapping();
+            toNewMaze();
+        } else {
+            alert("Du har ikke nok points");
+        }
     } else if (maze[playerPostion.y +1][playerPostion.x] == 5){
         pointScore();
         maze[playerPostion.y +1][playerPostion.x] = -1; 
